@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>La Sazón FM — La radio que le echa condimento a tu día</title>
+<meta name="description" content="La Sazón FM: radio online con música, jingles y humor. Escucha en vivo." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0F1214;
+    --panel: #1B1F22;
+    --panel-raised: #22272B;
+    --border: #2E3438;
+    --text: #EDEAE2;
+    --muted: #8A9096;
+    --onair: #E8432F;
+    --onair-dim: #4A241E;
+    --auto: #2FB8A6;
+    --auto-dim: #1B3A37;
+    --amber: #E8A93F;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .display { font-family: 'Oswald', sans-serif; letter-spacing: 0.02em; }
+  .mono { font-family: 'JetBrains Mono', monospace; font-variant-numeric: tabular-nums; }
+
+  .texture {
+    background-image: repeating-linear-gradient(
+      180deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px,
+      transparent 1px, transparent 3px
+    );
+  }
+
+  a { color: inherit; }
+
+  .wrap {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---------- Header ---------- */
+  header {
+    padding: 28px 0 0;
+  }
+  .brand {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .brand-name {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+  .brand-name span { color: var(--auto); }
+  .brand-tag {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    padding: 64px 0 48px;
+    text-align: center;
+  }
+  .hero-eyebrow {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    margin-bottom: 18px;
+  }
+  .hero-title {
+    font-size: clamp(40px, 8vw, 76px);
+    font-weight: 700;
+    line-height: 0.95;
+    margin: 0 0 18px;
+  }
+  .hero-title .sazon { color: var(--amber); }
+  .hero-sub {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 480px;
+    margin: 0 auto 46px;
+    line-height: 1.5;
+  }
+
+  /* ---------- Play lever (signature element) ---------- */
+  .console-panel {
+    max-width: 420px;
+    margin: 0 auto;
+    border-radius: 20px;
+    border: 1px solid var(--auto);
+    background: var(--auto-dim);
+    padding: 36px 32px;
+    box-shadow: 0 0 0 rgba(47,184,166,0);
+    transition: box-shadow .4s ease, border-color .4s ease, background .4s ease;
+  }
+  .console-panel.live {
+    border-color: var(--onair);
+    background: var(--onair-dim);
+    box-shadow: 0 0 40px rgba(232,67,47,0.45);
+  }
+  .console-panel:not(.live) {
+    box-shadow: 0 0 30px rgba(47,184,166,0.3);
+  }
+
+  .status-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .status-word {
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 22px;
+    color: var(--auto);
+    transition: color .3s ease;
+  }
+  .console-panel.live .status-word { color: var(--onair); }
+
+  .visualizer {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 4px;
+    height: 32px;
+    margin-bottom: 22px;
+  }
+  .visualizer span {
+    width: 4px;
+    border-radius: 2px;
+    background: var(--auto);
+    height: 6px;
+    transition: background .3s ease;
+    animation: none;
+  }
+  .console-panel.live .visualizer span { background: var(--onair); }
+  .console-panel.playing .visualizer span { animation: bounce 0.9s ease-in-out infinite; }
+  .visualizer span:nth-child(1){ animation-delay: 0s; }
+  .visualizer span:nth-child(2){ animation-delay: .12s; }
+  .visualizer span:nth-child(3){ animation-delay: .24s; }
+  .visualizer span:nth-child(4){ animation-delay: .36s; }
+  .visualizer span:nth-child(5){ animation-delay: .48s; }
+  .visualizer span:nth-child(6){ animation-delay: .36s; }
+  .visualizer span:nth-child(7){ animation-delay: .24s; }
+  .visualizer span:nth-child(8){ animation-delay: .12s; }
+  .visualizer span:nth-child(9){ animation-delay: 0s; }
+  @keyframes bounce {
+    0%, 100% { height: 6px; }
+    50% { height: 30px; }
+  }
+
+  .play-btn {
+    width: 92px;
+    height: 92px;
+    border-radius: 50%;
+    border: 2px solid var(--auto);
+    background: var(--panel);
+    color: var(--text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 18px;
+    transition: transform .15s ease, border-color .3s ease;
+  }
+  .play-btn:hover { transform: scale(1.05); }
+  .play-btn:active { transform: scale(0.97); }
+  .console-panel.live .play-btn { border-color: var(--onair); }
+  .play-btn svg { width: 30px; height: 30px; }
+
+  .play-caption {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  .volume-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 22px;
+  }
+  .volume-row input[type="range"] {
+    width: 120px;
+    accent-color: var(--auto);
+  }
+  .console-panel.live .volume-row input[type="range"] { accent-color: var(--onair); }
+
+  /* ---------- Section shared ---------- */
+  section { padding: 56px 0; border-top: 1px solid var(--border); }
+  .section-title {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    margin-bottom: 22px;
+  }
+
+  /* ---------- Schedule ---------- */
+  .schedule-list { display: flex; flex-direction: column; border-top: 1px solid var(--border); }
+  .schedule-row {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 18px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: baseline;
+  }
+  .schedule-time { color: var(--amber); font-size: 14px; }
+  .schedule-name { font-size: 16px; font-weight: 500; }
+  .schedule-desc { color: var(--muted); font-size: 13px; margin-top: 4px; }
+
+  /* ---------- Sponsors (easter egg) ---------- */
+  .sponsors-note {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+  .sponsor-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+  }
+  .sponsor-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .sponsor-name { font-family: 'Oswald', sans-serif; font-size: 18px; margin-bottom: 6px; color: var(--amber); }
+  .sponsor-slogan { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+  /* ---------- Footer ---------- */
+  footer {
+    padding: 40px 0 60px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+  }
+  footer a { text-decoration: underline; text-underline-offset: 3px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .visualizer span { animation: none !important; }
+  }
+</style>
+</head>
+<body class="texture">
+
+<header class="wrap">
+  <div class="brand">
+    <div class="brand-name display">LA <span>SAZÓN</span> FM</div>
+    <div class="brand-tag">Radio online</div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero" style="border-top:none;">
+    <div class="hero-eyebrow">Transmitiendo en vivo, siempre</div>
+    <h1 class="hero-title display">La radio que<br/>le echa <span class="sazon">sazón</span><br/>a tu día</h1>
+    <p class="hero-sub">Música, jingles absurdos y anuncios que no venden nada real. Solo para disfrutar.</p>
+
+    <div class="console-panel" id="consolePanel">
+      <div class="status-label">Estado de la transmisión</div>
+      <div class="status-word display" id="statusWord">AUTO DJ</div>
+
+      <div class="visualizer" id="visualizer">
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span>
+      </div>
+
+      <button class="play-btn" id="playBtn" aria-label="Reproducir La Sazón FM">
+        <svg id="playIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        <svg id="pauseIcon" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+      </button>
+      <div class="play-caption mono" id="playCaption">Presiona para escuchar</div>
+
+      <div class="volume-row">
+        <span class="mono" style="font-size:11px; color:var(--muted);">VOL</span>
+        <input type="range" id="volumeSlider" min="0" max="100" value="80" />
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-title">Programación</div>
+    <div class="schedule-list">
+      <div class="schedule-row">
+        <div class="schedule-time mono">06 – 09</div>
+        <div>
+          <div class="schedule-name display">Café con Sazón</div>
+          <div class="schedule-desc">Instrumental y chill out para arrancar el día suave.</div>
+        </div>
+      </div>
+      <div class="schedule-row">
+        <div class="schedule-time mono">09 – 12</div>
+        <div>
+          <div class="schedule-name display">La Vieja Guardia</div>
+          <div class="schedule-desc">Clásicos y éxitos de los 60s, 70s y 80s.</div>
+        </div>
+      </div>
+      <div class="schedule-row">
+        <div class="schedule-time mono">12 – 14</div>
+        <div>
+          <div class="schedule-name display">Sabor de Mediodía</div>
+          <div class="schedule-desc">Salsa, merengue y tropical para el almuerzo.</div>
+        </div>
+      </div>
+      <div class="schedule-row">
+        <div class="schedule-time mono">14 – 17</div>
+        <div>
+          <div class="schedule-name display">Tarde de Baladas</div>
+          <div class="schedule-desc">Pop y baladas en español para la tarde tranquila.</div>
+        </div>
+      </div>
+      <div class="schedule-row">
+        <div class="schedule-time mono">17 – 20</div>
+        <div>
+          <div class="schedule-name display">Hora Pico con Sazón</div>
+          <div class="schedule-desc">Rock y pop en español, energía para cerrar el día.</div>
+        </div>
+      </div>
+      <div class="schedule-row">
+        <div class="schedule-time mono">20 – 23</div>
+        <div>
+          <div class="schedule-name display">Raíces</div>
+          <div class="schedule-desc">Música venezolana y folklórica, sabor de casa.</div>
+        </div>
+      </div>
+      <div class="schedule-row" style="border-bottom:none;">
+        <div class="schedule-time mono">23 – 06</div>
+        <div>
+          <div class="schedule-name display">Trasnoche Variado</div>
+          <div class="schedule-desc">De todo un poco, para los que no tienen sueño.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-title">Nuestros patrocinadores</div>
+    <p class="sponsors-note">Ninguno de estos productos existe. Ninguno de estos anuncios es real. Todo es puro humor, para que la radio suene como radio de verdad.</p>
+    <div class="sponsor-grid">
+      <div class="sponsor-card">
+        <div class="sponsor-name display">PEGO</div>
+        <div class="sponsor-slogan">No lo llame cemento... llámelo PEGO.</div>
+      </div>
+      <div class="sponsor-card">
+        <div class="sponsor-name display">Óptica El Puerto</div>
+        <div class="sponsor-slogan">Donde usted va visco... y sale tuerto.</div>
+      </div>
+      <div class="sponsor-card">
+        <div class="sponsor-name display">Salchichas El Gocho</div>
+        <div class="sponsor-slogan">Lo que su paladar necesita... y un poco más.</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  La Sazón FM — hecha en casa, con cariño y sin fines comerciales.
+</footer>
+
+<audio id="audioPlayer" preload="none"></audio>
+
+<script>
+  // Cambia esto si tu IP o mount cambian
+  const STREAM_URL = "http://148.116.67.184:8000/radio.mp3";
+
+  const audio = document.getElementById('audioPlayer');
+  const playBtn = document.getElementById('playBtn');
+  const playIcon = document.getElementById('playIcon');
+  const pauseIcon = document.getElementById('pauseIcon');
+  const playCaption = document.getElementById('playCaption');
+  const consolePanel = document.getElementById('consolePanel');
+  const volumeSlider = document.getElementById('volumeSlider');
+
+  audio.volume = 0.8;
+
+  let isPlaying = false;
+
+  function setPlayingUI(playing) {
+    isPlaying = playing;
+    playIcon.style.display = playing ? 'none' : 'block';
+    pauseIcon.style.display = playing ? 'block' : 'none';
+    consolePanel.classList.toggle('playing', playing);
+    playCaption.textContent = playing ? 'Al aire' : 'Presiona para escuchar';
+  }
+
+  playBtn.addEventListener('click', () => {
+    if (!isPlaying) {
+      audio.src = STREAM_URL + '?t=' + Date.now(); // cache-bust to avoid stale connections
+      audio.play().then(() => setPlayingUI(true)).catch(() => {
+        playCaption.textContent = 'No se pudo conectar, intenta de nuevo';
+      });
+    } else {
+      audio.pause();
+      audio.removeAttribute('src');
+      audio.load();
+      setPlayingUI(false);
+    }
+  });
+
+  volumeSlider.addEventListener('input', (e) => {
+    audio.volume = Number(e.target.value) / 100;
+  });
+
+  audio.addEventListener('waiting', () => {
+    playCaption.textContent = 'Conectando...';
+  });
+  audio.addEventListener('playing', () => {
+    playCaption.textContent = 'Al aire';
+  });
+  audio.addEventListener('error', () => {
+    setPlayingUI(false);
+    playCaption.textContent = 'Transmisión no disponible';
+  });
+</script>
+
+</body>
+</html>
