@@ -75,60 +75,74 @@
   }
 
   /* ---------- Hero ---------- */
-  .hero {
-    padding: 56px 0 48px;
-    text-align: center;
+  .hero-wrap {
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 0 24px;
   }
-  .hero-top {
-    display: flex;
-    flex-direction: column;
+  .hero {
+    padding: 40px 0 56px;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr;
     align-items: center;
-    gap: 22px;
-    margin-bottom: 30px;
+    gap: 32px;
+  }
+  .mascot-col {
+    display: flex;
+    justify-content: center;
   }
   .mascot {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
+    width: 100%;
+    max-width: 340px;
+    height: auto;
+    border-radius: 24px;
     object-fit: cover;
-    border: 3px solid var(--auto);
-    box-shadow: 0 0 30px rgba(47,184,166,0.35);
-    background: var(--panel);
+    border: 1px solid var(--border);
+    box-shadow: 0 0 50px rgba(47,184,166,0.18);
+  }
+  .content-col { text-align: center; }
+  @media (min-width: 860px) {
+    .hero-grid {
+      grid-template-columns: 40% 1fr;
+      gap: 40px;
+    }
+    .mascot {
+      max-width: 100%;
+    }
+    .content-col { text-align: left; }
+    .hero-sub { margin-left: 0; }
+    .console-panel { margin-left: 0; }
   }
   .mascot-caption {
     font-family: 'Oswald', sans-serif;
-    font-size: 13px;
+    font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 0.25em;
     color: var(--amber);
-  }
-  @media (min-width: 640px) {
-    .hero-top {
-      flex-direction: row;
-      justify-content: center;
-      text-align: left;
-      gap: 28px;
-    }
+    text-align: center;
+    margin-top: 12px;
   }
   .hero-eyebrow {
     font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 0.3em;
     color: var(--muted);
-    margin-bottom: 18px;
+    margin-bottom: 16px;
   }
   .hero-title {
-    font-size: clamp(40px, 8vw, 76px);
+    font-size: clamp(36px, 6vw, 60px);
     font-weight: 700;
-    line-height: 0.95;
+    line-height: 0.98;
     margin: 0 0 18px;
   }
   .hero-title .sazon { color: var(--amber); }
   .hero-sub {
-    font-size: 17px;
+    font-size: 16px;
     color: var(--muted);
-    max-width: 480px;
-    margin: 0 auto 46px;
+    max-width: 420px;
+    margin: 0 auto 34px;
     line-height: 1.5;
   }
 
@@ -139,7 +153,7 @@
     border-radius: 20px;
     border: 1px solid var(--auto);
     background: var(--auto-dim);
-    padding: 36px 32px;
+    padding: 32px 28px;
     box-shadow: 0 0 0 rgba(47,184,166,0);
     transition: box-shadow .4s ease, border-color .4s ease, background .4s ease;
   }
@@ -307,42 +321,50 @@
   </div>
 </header>
 
-<main class="wrap">
+<main>
 
   <section class="hero" style="border-top:none;">
-    <div class="hero-top">
-      <img src="tio-nano.png" alt="Tío Nano, mascota de La Sazón FM" class="mascot" />
-      <div>
-        <div class="hero-eyebrow" style="margin-bottom:10px;">Transmitiendo en vivo, siempre</div>
-        <h1 class="hero-title display" style="margin-bottom:8px;">La radio que<br/>le echa <span class="sazon">sazón</span><br/>a tu día</h1>
-        <div class="mascot-caption">— Tío Nano</div>
-      </div>
-    </div>
-    <p class="hero-sub">Música, jingles absurdos y anuncios que no venden nada real. Solo para disfrutar.</p>
+    <div class="hero-wrap">
+      <div class="hero-grid">
+        <div class="mascot-col">
+          <div>
+            <img src="tio-nano.png" alt="Tío Nano, mascota de La Sazón FM" class="mascot" />
+            <div class="mascot-caption">— Tío Nano</div>
+          </div>
+        </div>
 
-    <div class="console-panel" id="consolePanel">
-      <div class="status-label">Estado de la transmisión</div>
-      <div class="status-word display" id="statusWord">AUTO DJ</div>
+        <div class="content-col">
+          <div class="hero-eyebrow">Transmitiendo en vivo, siempre</div>
+          <h1 class="hero-title display">La radio que<br/>le echa <span class="sazon">sazón</span><br/>a tu día</h1>
+          <p class="hero-sub">Música, jingles absurdos y anuncios que no venden nada real. Solo para disfrutar.</p>
 
-      <div class="visualizer" id="visualizer">
-        <span></span><span></span><span></span><span></span><span></span>
-        <span></span><span></span><span></span><span></span>
-      </div>
+          <div class="console-panel" id="consolePanel">
+            <div class="status-label">Estado de la transmisión</div>
+            <div class="status-word display" id="statusWord">AUTO DJ</div>
 
-      <button class="play-btn" id="playBtn" aria-label="Reproducir La Sazón FM">
-        <svg id="playIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-        <svg id="pauseIcon" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
-      </button>
-      <div class="play-caption mono" id="playCaption">Presiona para escuchar</div>
+            <div class="visualizer" id="visualizer">
+              <span></span><span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span>
+            </div>
 
-      <div class="volume-row">
-        <span class="mono" style="font-size:11px; color:var(--muted);">VOL</span>
-        <input type="range" id="volumeSlider" min="0" max="100" value="80" />
+            <button class="play-btn" id="playBtn" aria-label="Reproducir La Sazón FM">
+              <svg id="playIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              <svg id="pauseIcon" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+            </button>
+            <div class="play-caption mono" id="playCaption">Presiona para escuchar</div>
+
+            <div class="volume-row">
+              <span class="mono" style="font-size:11px; color:var(--muted);">VOL</span>
+              <input type="range" id="volumeSlider" min="0" max="100" value="80" />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
   <section>
+   <div class="wrap">
     <div class="section-title">Programación</div>
     <div class="schedule-list">
       <div class="schedule-row">
@@ -395,9 +417,11 @@
         </div>
       </div>
     </div>
+   </div>
   </section>
 
   <section>
+   <div class="wrap">
     <div class="section-title">Nuestros patrocinadores</div>
     <p class="sponsors-note">Ninguno de estos productos existe. Ninguno de estos anuncios es real. Todo es puro humor, para que la radio suene como radio de verdad.</p>
     <div class="sponsor-grid">
@@ -414,6 +438,7 @@
         <div class="sponsor-slogan">Lo que su paladar necesita... y un poco más.</div>
       </div>
     </div>
+   </div>
   </section>
 
 </main>
