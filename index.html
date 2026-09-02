@@ -162,7 +162,6 @@
     display: flex;
     justify-content: center;
     position: relative;
-    order: 2;
   }
   .mascot-frame {
     position: relative;
@@ -202,7 +201,7 @@
   @media (prefers-reduced-motion: reduce) {
     .badge-seal .ring-text { animation: none; }
   }
-  .content-col { text-align: center; order: 1; }
+  .content-col { text-align: center; }
   @media (min-width: 860px) {
     .hero-grid {
       grid-template-columns: 40% 1fr;
@@ -211,8 +210,7 @@
     .mascot-frame {
       max-width: 100%;
     }
-    .mascot-col { order: 1; }
-    .content-col { text-align: left; order: 2; }
+    .content-col { text-align: left; }
     .hero-sub { margin-left: 0; }
     .console-panel { margin-left: 0; }
   }
