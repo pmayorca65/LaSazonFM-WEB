@@ -435,6 +435,58 @@
   .sponsor-name { font-family: 'Oswald', sans-serif; font-size: 18px; margin-bottom: 6px; color: var(--amber); }
   .sponsor-slogan { font-size: 13px; color: var(--muted); line-height: 1.5; }
 
+  /* ---------- Carrusel de anuncios (rota una imagen por minuto) ---------- */
+  /* ---------- Reproductor + carrusel de anuncios, lado a lado en pantallas grandes ---------- */
+  .console-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  @media (min-width: 640px) {
+    .console-row {
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: center;
+    }
+  }
+
+  .hero-sponsor {
+    max-width: 220px;
+    text-align: center;
+  }
+  .hero-sponsor-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .sponsor-carousel {
+    position: relative;
+    width: 100%;
+    max-width: 220px;
+    margin: 0 auto;
+    aspect-ratio: 4 / 3;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--panel);
+  }
+  .sponsor-carousel img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+  }
+  .sponsor-carousel img.active { opacity: 1; }
+  @media (prefers-reduced-motion: reduce) {
+    .sponsor-carousel img { transition: none; }
+  }
+
   /* ---------- Footer ---------- */
   footer {
     padding: 40px 0 60px;
@@ -498,24 +550,36 @@
           <h1 class="hero-title display">La radio que<br/>le echa <span class="sazon">sazón</span><br/>a tu día</h1>
           <p class="hero-sub">Música, jingles absurdos y anuncios que no venden nada real. Solo para disfrutar.</p>
 
-          <div class="console-panel" id="consolePanel">
-            <div class="status-label">Estado de la transmisión</div>
-            <div class="status-word display" id="statusWord">AUTO DJ</div>
+          <div class="console-row">
+            <div class="console-panel" id="consolePanel">
+              <div class="status-label">Estado de la transmisión</div>
+              <div class="status-word display" id="statusWord">AUTO DJ</div>
 
-            <div class="visualizer" id="visualizer">
-              <span></span><span></span><span></span><span></span><span></span>
-              <span></span><span></span><span></span><span></span>
+              <div class="visualizer" id="visualizer">
+                <span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span>
+              </div>
+
+              <button class="play-btn" id="playBtn" aria-label="Reproducir La Sazón FM">
+                <svg id="playIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                <svg id="pauseIcon" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+              </button>
+              <div class="play-caption mono" id="playCaption">Presiona para escuchar</div>
+
+              <div class="volume-row">
+                <span class="mono" style="font-size:11px; color:var(--muted);">VOL</span>
+                <input type="range" id="volumeSlider" min="0" max="100" value="80" />
+              </div>
             </div>
 
-            <button class="play-btn" id="playBtn" aria-label="Reproducir La Sazón FM">
-              <svg id="playIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-              <svg id="pauseIcon" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
-            </button>
-            <div class="play-caption mono" id="playCaption">Presiona para escuchar</div>
-
-            <div class="volume-row">
-              <span class="mono" style="font-size:11px; color:var(--muted);">VOL</span>
-              <input type="range" id="volumeSlider" min="0" max="100" value="80" />
+            <div class="hero-sponsor">
+              <div class="hero-sponsor-label">Patrocinado por</div>
+              <div class="sponsor-carousel" id="sponsorCarousel">
+                <img src="PEGO.png" alt="Publicidad: Pego, el pegue que la tiene dura" class="sponsor-img active" />
+                <img src="El_Puerto.png" alt="Publicidad: Óptica El Puerto" class="sponsor-img" />
+                <img src="ElGocho.png" alt="Publicidad: Salchichas El Gocho" class="sponsor-img" />
+                <img src="Dosnal.png" alt="Publicidad: Dosnal Gotas" class="sponsor-img" />
+              </div>
             </div>
           </div>
         </div>
@@ -639,29 +703,6 @@
    </div>
   </section>
 
-  <section>
-   <div class="section-divider">
-     <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L9 9l-7 1 5.2 4.9L5.8 22 12 18.3 18.2 22l-1.4-7.1L22 10l-7-1-3-7z"/></svg>
-   </div>
-   <div class="wrap">
-    <div class="section-title">Nuestros patrocinadores</div>
-    <p class="sponsors-note">Ninguno de estos productos existe. Ninguno de estos anuncios es real. Todo es puro humor, para que la radio suene como radio de verdad.</p>
-    <div class="sponsor-grid">
-      <div class="sponsor-card">
-        <div class="sponsor-name display">PEGO</div>
-        <div class="sponsor-slogan">No lo llame cemento... llámelo PEGO.</div>
-      </div>
-      <div class="sponsor-card">
-        <div class="sponsor-name display">Óptica El Puerto</div>
-        <div class="sponsor-slogan">Donde usted va visco... y sale tuerto.</div>
-      </div>
-      <div class="sponsor-card">
-        <div class="sponsor-name display">Salchichas El Gocho</div>
-        <div class="sponsor-slogan">Lo que su paladar necesita... y un poco más.</div>
-      </div>
-    </div>
-   </div>
-  </section>
 
 </main>
 
@@ -751,6 +792,18 @@
 
   updateTicker();
   setInterval(updateTicker, 15000);
+
+  // --- Carrusel de anuncios: cambia de imagen cada minuto ---
+  (function () {
+    const imgs = document.querySelectorAll('#sponsorCarousel .sponsor-img');
+    if (imgs.length <= 1) return;
+    let indiceActual = 0;
+    setInterval(() => {
+      imgs[indiceActual].classList.remove('active');
+      indiceActual = (indiceActual + 1) % imgs.length;
+      imgs[indiceActual].classList.add('active');
+    }, 60000); // 60000 ms = 1 minuto
+  })();
 </script>
 
 </body>
