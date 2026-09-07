@@ -213,6 +213,7 @@
     .content-col { text-align: left; }
     .hero-sub { margin-left: 0; }
     .console-panel { margin-left: 0; }
+    .console-cta { margin-left: 0; }
   }
   .mascot-caption {
     font-family: 'Oswald', sans-serif;
@@ -355,6 +356,38 @@
     accent-color: var(--auto);
   }
   .console-panel.live .volume-row input[type="range"] { accent-color: var(--onair); }
+
+  /* ---------- Boton de Radio Interactiva (suscripcion + tokens) ---------- */
+  .console-cta {
+    display: block;
+    max-width: 420px;
+    margin: 18px auto 0;
+    text-align: center;
+  }
+  .cta-suscribir {
+    display: inline-block;
+    padding: 13px 26px;
+    border-radius: 999px;
+    border: 1px solid var(--amber);
+    background: transparent;
+    color: var(--amber);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background .2s ease, color .2s ease;
+  }
+  .cta-suscribir:hover {
+    background: var(--amber);
+    color: var(--bg);
+  }
+  .cta-caption {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 10px;
+    line-height: 1.4;
+  }
 
   /* ---------- Section shared ---------- */
   section { padding: 60px 0 56px; position: relative; }
@@ -517,6 +550,11 @@
               <span class="mono" style="font-size:11px; color:var(--muted);">VOL</span>
               <input type="range" id="volumeSlider" min="0" max="100" value="80" />
             </div>
+          </div>
+
+          <div class="console-cta">
+            <a href="https://oyentes.lasazonfm.com" target="_blank" rel="noopener" class="cta-suscribir display">🎶 Suscríbete y elige la próxima canción</a>
+            <div class="cta-caption">Gratis. Gana tokens y decide qué suena en la radio.</div>
           </div>
         </div>
       </div>
