@@ -225,6 +225,7 @@
     }
     .content-col { text-align: left; }
     .hero-sub { margin-left: 0; }
+    .console-panel { margin-left: 0; }
   }
   .mascot-caption {
     font-family: 'Oswald', sans-serif;
@@ -262,25 +263,10 @@
     line-height: 1.5;
   }
 
-  /* ---------- Fila: reproductor + patrocinador ---------- */
-  .cta-row {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 24px;
-  }
-  @media (min-width: 860px) {
-    .cta-row {
-      flex-direction: row;
-      align-items: flex-start;
-      justify-content: flex-start;
-    }
-  }
-
   /* ---------- Play lever (signature element) ---------- */
   .console-panel {
     max-width: 420px;
-    width: 100%;
+    margin: 0 auto;
     border-radius: 20px;
     border: 1px solid var(--auto);
     background: var(--auto-dim);
@@ -383,67 +369,6 @@
   }
   .console-panel.live .volume-row input[type="range"] { accent-color: var(--onair); }
 
-  /* ---------- Carrusel de patrocinadores (poster completo, junto al reproductor) ---------- */
-  .sponsor-block {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    max-width: 300px;
-  }
-  .sponsor-ribbon {
-    font-family: 'Oswald', sans-serif;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    color: var(--muted);
-    margin-bottom: 10px;
-  }
-  .sponsor-photo {
-    width: 100%;
-    height: 380px;
-    object-fit: contain;
-    background: #fff;
-    border-radius: 16px;
-    padding: 10px;
-    box-shadow: 0 12px 34px rgba(0,0,0,0.4);
-    opacity: 0;
-    transition: opacity 0.8s ease;
-  }
-  .sponsor-photo.visible { opacity: 1; }
-
-  /* ---------- Boton de Radio Interactiva (suscripcion + tokens) ---------- */
-  .console-cta {
-    display: block;
-    max-width: 420px;
-    margin: 26px auto 0;
-    text-align: center;
-  }
-  .cta-suscribir {
-    display: inline-block;
-    padding: 13px 26px;
-    border-radius: 999px;
-    border: 1px solid var(--amber);
-    background: transparent;
-    color: var(--amber);
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    text-decoration: none;
-    transition: background .2s ease, color .2s ease;
-  }
-  .cta-suscribir:hover {
-    background: var(--amber);
-    color: var(--bg);
-  }
-  .cta-caption {
-    font-size: 12px;
-    color: var(--muted);
-    margin-top: 10px;
-    line-height: 1.4;
-  }
-
   /* ---------- Section shared ---------- */
   section { padding: 60px 0 56px; position: relative; }
   .section-divider {
@@ -483,6 +408,102 @@
   .schedule-time { color: var(--amber); font-size: 14px; }
   .schedule-name { font-size: 16px; font-weight: 500; }
   .schedule-desc { color: var(--muted); font-size: 13px; margin-top: 4px; }
+
+  /* ---------- Sponsors (easter egg) ---------- */
+  .sponsors-note {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+  .sponsor-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+  }
+  .sponsor-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .sponsor-card::before {
+    content: 'PATROCINADOR';
+    position: absolute;
+    top: 11px;
+    right: -30px;
+    width: 120px;
+    text-align: center;
+    transform: rotate(45deg);
+    background: var(--amber);
+    color: var(--bg);
+    font-family: 'Oswald', sans-serif;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 2px 0;
+  }
+  .sponsor-name { font-family: 'Oswald', sans-serif; font-size: 18px; margin-bottom: 6px; color: var(--amber); }
+  .sponsor-slogan { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+  /* ---------- Carrusel de anuncios (rota una imagen por minuto) ---------- */
+  /* ---------- Reproductor + carrusel de anuncios, lado a lado en pantallas grandes ---------- */
+  .console-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  @media (min-width: 640px) {
+    .console-row {
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: center;
+    }
+    .console-panel,
+    .hero-sponsor {
+      flex-shrink: 0;
+    }
+  }
+
+  .hero-sponsor {
+    width: min(340px, 100%);
+    margin: 0 auto;
+    text-align: center;
+  }
+  .hero-sponsor-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .sponsor-carousel {
+    position: relative;
+    width: 100%;
+    max-width: 340px;
+    margin: 0 auto;
+    aspect-ratio: 4 / 3;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--panel);
+  }
+  .sponsor-carousel img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+  }
+  .sponsor-carousel img.active { opacity: 1; }
+  @media (prefers-reduced-motion: reduce) {
+    .sponsor-carousel img { transition: none; }
+  }
 
   /* ---------- Footer ---------- */
   footer {
@@ -547,7 +568,7 @@
           <h1 class="hero-title display">La radio que<br/>le echa <span class="sazon">sazón</span><br/>a tu día</h1>
           <p class="hero-sub">Música, jingles absurdos y anuncios que no venden nada real. Solo para disfrutar.</p>
 
-          <div class="cta-row">
+          <div class="console-row">
             <div class="console-panel" id="consolePanel">
               <div class="status-label">Estado de la transmisión</div>
               <div class="status-word display" id="statusWord">AUTO DJ</div>
@@ -569,15 +590,15 @@
               </div>
             </div>
 
-            <div class="sponsor-block">
-              <div class="sponsor-ribbon">Patrocinado por</div>
-              <img id="sponsorImg" class="sponsor-photo" src="" alt="Patrocinador" />
+            <div class="hero-sponsor">
+              <div class="hero-sponsor-label">Patrocinado por</div>
+              <div class="sponsor-carousel" id="sponsorCarousel">
+                <img src="PEGO.png" alt="Publicidad: Pego, el pegue que la tiene dura" class="sponsor-img active" />
+                <img src="El_Puerto.png" alt="Publicidad: Óptica El Puerto" class="sponsor-img" />
+                <img src="ElGocho.png" alt="Publicidad: Salchichas El Gocho" class="sponsor-img" />
+                <img src="Dosnal.png" alt="Publicidad: Dosnal Gotas" class="sponsor-img" />
+              </div>
             </div>
-          </div>
-
-          <div class="console-cta">
-            <a href="https://oyentes.lasazonfm.com" target="_blank" rel="noopener" class="cta-suscribir display">🎶 Suscríbete y elige la próxima canción</a>
-            <div class="cta-caption">Gratis. Gana tokens y decide qué suena en la radio.</div>
           </div>
         </div>
       </div>
@@ -592,17 +613,38 @@
     <div class="section-title">Programación</div>
     <div class="schedule-list">
       <div class="schedule-row">
-        <div class="schedule-time mono">06 – 09</div>
+        <div class="schedule-time mono">06 – 08</div>
         <div>
           <div class="schedule-name display">Café con Sazón</div>
           <div class="schedule-desc">Instrumental y chill out para arrancar el día suave.</div>
         </div>
       </div>
       <div class="schedule-row">
-        <div class="schedule-time mono">09 – 12</div>
+        <div class="schedule-time mono">08 – 09</div>
         <div>
           <div class="schedule-name display">La Vieja Guardia</div>
           <div class="schedule-desc">Clásicos y éxitos de los 60s, 70s y 80s.</div>
+        </div>
+      </div>
+      <div class="schedule-row">
+        <div class="schedule-time mono">09 – 10</div>
+        <div>
+          <div class="schedule-name display">Lo Nuevo en Español</div>
+          <div class="schedule-desc">Los éxitos más recientes en español.</div>
+        </div>
+      </div>
+      <div class="schedule-row">
+        <div class="schedule-time mono">10 – 11</div>
+        <div>
+          <div class="schedule-name display">Pop en Español</div>
+          <div class="schedule-desc">Los grandes del pop en español.</div>
+        </div>
+      </div>
+      <div class="schedule-row">
+        <div class="schedule-time mono">11 – 12</div>
+        <div>
+          <div class="schedule-name display">Alterno Latino</div>
+          <div class="schedule-desc">Sonidos alternativos y fusión latina.</div>
         </div>
       </div>
       <div class="schedule-row">
@@ -613,28 +655,63 @@
         </div>
       </div>
       <div class="schedule-row">
-        <div class="schedule-time mono">14 – 17</div>
+        <div class="schedule-time mono">14 – 16</div>
         <div>
           <div class="schedule-name display">Tarde de Baladas</div>
-          <div class="schedule-desc">Pop y baladas en español para la tarde tranquila.</div>
+          <div class="schedule-desc">Baladas en español para la tarde tranquila.</div>
         </div>
       </div>
       <div class="schedule-row">
-        <div class="schedule-time mono">17 – 20</div>
+        <div class="schedule-time mono">16 – 17</div>
+        <div>
+          <div class="schedule-name display">Pop Rock Internacional</div>
+          <div class="schedule-desc">Lo mejor del pop rock en inglés.</div>
+        </div>
+      </div>
+      <div class="schedule-row">
+        <div class="schedule-time mono">17 – 18</div>
+        <div>
+          <div class="schedule-name display">Lo Nuevo en Español</div>
+          <div class="schedule-desc">Los éxitos más recientes en español.</div>
+        </div>
+      </div>
+      <div class="schedule-row">
+        <div class="schedule-time mono">18 – 19</div>
+        <div>
+          <div class="schedule-name display">Lo Nuevo en Inglés</div>
+          <div class="schedule-desc">Los éxitos más recientes en inglés.</div>
+        </div>
+      </div>
+      <div class="schedule-row">
+        <div class="schedule-time mono">19 – 20</div>
         <div>
           <div class="schedule-name display">Hora Pico con Sazón</div>
           <div class="schedule-desc">Rock y pop en español, energía para cerrar el día.</div>
         </div>
       </div>
       <div class="schedule-row">
-        <div class="schedule-time mono">20 – 23</div>
+        <div class="schedule-time mono">20 – 22</div>
         <div>
           <div class="schedule-name display">Raíces</div>
           <div class="schedule-desc">Música venezolana y folklórica, sabor de casa.</div>
         </div>
       </div>
+      <div class="schedule-row">
+        <div class="schedule-time mono">22 – 23</div>
+        <div>
+          <div class="schedule-name display">Baladas Internacionales</div>
+          <div class="schedule-desc">Grandes baladas internacionales para la noche.</div>
+        </div>
+      </div>
+      <div class="schedule-row">
+        <div class="schedule-time mono">23 – 01</div>
+        <div>
+          <div class="schedule-name display">Rock Clásico</div>
+          <div class="schedule-desc">Rock clásico en inglés para la madrugada.</div>
+        </div>
+      </div>
       <div class="schedule-row" style="border-bottom:none;">
-        <div class="schedule-time mono">23 – 06</div>
+        <div class="schedule-time mono">01 – 06</div>
         <div>
           <div class="schedule-name display">Trasnoche Variado</div>
           <div class="schedule-desc">De todo un poco, para los que no tienen sueño.</div>
@@ -644,13 +721,11 @@
    </div>
   </section>
 
+
 </main>
 
 <footer class="wrap">
   La Sazón FM — hecha en casa, con cariño y sin fines comerciales.
-  <div style="margin-top:8px; font-size:13px; color:var(--muted);">
-    Contacto: <a href="mailto:lasazonfm@gmail.com" style="color:var(--auto);">lasazonfm@gmail.com</a>
-  </div>
 </footer>
 
 <audio id="audioPlayer" preload="none"></audio>
@@ -743,24 +818,17 @@
   updateNowPlaying();
   setInterval(updateNowPlaying, 15000);
 
-  // --- Carrusel de patrocinadores: poster completo, rotando cada 60s con fade ---
-  const SPONSOR_IMAGES = ['PEGO.png', 'El_Puerto.png', 'ElGocho.png', 'Dosnal.png'];
-  const sponsorImg = document.getElementById('sponsorImg');
-  let sponsorIndex = 0;
-
-  function mostrarSponsor(i) {
-    sponsorImg.classList.remove('visible');
-    setTimeout(() => {
-      sponsorImg.src = SPONSOR_IMAGES[i];
-      sponsorImg.classList.add('visible');
-    }, 400);
-  }
-
-  mostrarSponsor(sponsorIndex);
-  setInterval(() => {
-    sponsorIndex = (sponsorIndex + 1) % SPONSOR_IMAGES.length;
-    mostrarSponsor(sponsorIndex);
-  }, 60000);
+  // --- Carrusel de anuncios: cambia de imagen cada minuto ---
+  (function () {
+    const imgs = document.querySelectorAll('#sponsorCarousel .sponsor-img');
+    if (imgs.length <= 1) return;
+    let indiceActual = 0;
+    setInterval(() => {
+      imgs[indiceActual].classList.remove('active');
+      indiceActual = (indiceActual + 1) % imgs.length;
+      imgs[indiceActual].classList.add('active');
+    }, 60000); // 60000 ms = 1 minuto
+  })();
 </script>
 
 </body>
