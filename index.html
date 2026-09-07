@@ -225,9 +225,6 @@
     }
     .content-col { text-align: left; }
     .hero-sub { margin-left: 0; }
-    .console-panel { margin-left: 0; }
-    .console-cta { margin-left: 0; }
-    .sponsor-carousel { margin-left: 0; }
   }
   .mascot-caption {
     font-family: 'Oswald', sans-serif;
@@ -265,10 +262,25 @@
     line-height: 1.5;
   }
 
+  /* ---------- Fila: reproductor + patrocinador ---------- */
+  .cta-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+  @media (min-width: 860px) {
+    .cta-row {
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: flex-start;
+    }
+  }
+
   /* ---------- Play lever (signature element) ---------- */
   .console-panel {
     max-width: 420px;
-    margin: 0 auto;
+    width: 100%;
     border-radius: 20px;
     border: 1px solid var(--auto);
     background: var(--auto-dim);
@@ -371,11 +383,38 @@
   }
   .console-panel.live .volume-row input[type="range"] { accent-color: var(--onair); }
 
+  /* ---------- Carrusel de patrocinadores (poster completo, junto al reproductor) ---------- */
+  .sponsor-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 300px;
+  }
+  .sponsor-ribbon {
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .sponsor-photo {
+    width: 100%;
+    height: 380px;
+    object-fit: cover;
+    border-radius: 16px;
+    box-shadow: 0 12px 34px rgba(0,0,0,0.4);
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+  .sponsor-photo.visible { opacity: 1; }
+
   /* ---------- Boton de Radio Interactiva (suscripcion + tokens) ---------- */
   .console-cta {
     display: block;
     max-width: 420px;
-    margin: 18px auto 0;
+    margin: 26px auto 0;
     text-align: center;
   }
   .cta-suscribir {
@@ -401,75 +440,6 @@
     color: var(--muted);
     margin-top: 10px;
     line-height: 1.4;
-  }
-
-  /* ---------- Carrusel de patrocinadores (junto al hero) ---------- */
-  .sponsor-carousel {
-    position: relative;
-    max-width: 420px;
-    margin: 22px auto 0;
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 16px 20px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    overflow: hidden;
-    text-align: left;
-  }
-  .sponsor-carousel::before {
-    content: 'PATROCINADOR';
-    position: absolute;
-    top: 9px;
-    right: -28px;
-    width: 110px;
-    text-align: center;
-    transform: rotate(45deg);
-    background: var(--amber);
-    color: var(--bg);
-    font-family: 'Oswald', sans-serif;
-    font-size: 7px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    padding: 2px 0;
-  }
-  .sponsor-carousel-img {
-    width: 52px;
-    height: 52px;
-    flex-shrink: 0;
-    object-fit: contain;
-    background: #fff;
-    border-radius: 8px;
-    padding: 5px;
-    opacity: 0;
-    transition: opacity 0.8s ease;
-  }
-  .sponsor-carousel-img.visible { opacity: 1; }
-  .sponsor-carousel-text {
-    opacity: 0;
-    transition: opacity 0.8s ease;
-    min-width: 0;
-  }
-  .sponsor-carousel-text.visible { opacity: 1; }
-  .sponsor-carousel-name {
-    font-family: 'Oswald', sans-serif;
-    font-size: 15px;
-    color: var(--amber);
-    margin-bottom: 3px;
-  }
-  .sponsor-carousel-slogan {
-    font-size: 12.5px;
-    color: var(--muted);
-    line-height: 1.4;
-  }
-  .sponsor-carousel-note {
-    max-width: 420px;
-    margin: 8px auto 0;
-    font-size: 11px;
-    color: var(--muted);
-    text-align: center;
-    line-height: 1.5;
   }
 
   /* ---------- Section shared ---------- */
@@ -575,24 +545,31 @@
           <h1 class="hero-title display">La radio que<br/>le echa <span class="sazon">sazón</span><br/>a tu día</h1>
           <p class="hero-sub">Música, jingles absurdos y anuncios que no venden nada real. Solo para disfrutar.</p>
 
-          <div class="console-panel" id="consolePanel">
-            <div class="status-label">Estado de la transmisión</div>
-            <div class="status-word display" id="statusWord">AUTO DJ</div>
+          <div class="cta-row">
+            <div class="console-panel" id="consolePanel">
+              <div class="status-label">Estado de la transmisión</div>
+              <div class="status-word display" id="statusWord">AUTO DJ</div>
 
-            <div class="visualizer" id="visualizer">
-              <span></span><span></span><span></span><span></span><span></span>
-              <span></span><span></span><span></span><span></span>
+              <div class="visualizer" id="visualizer">
+                <span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span>
+              </div>
+
+              <button class="play-btn" id="playBtn" aria-label="Reproducir La Sazón FM">
+                <svg id="playIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                <svg id="pauseIcon" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+              </button>
+              <div class="play-caption mono" id="playCaption">Presiona para escuchar</div>
+
+              <div class="volume-row">
+                <span class="mono" style="font-size:11px; color:var(--muted);">VOL</span>
+                <input type="range" id="volumeSlider" min="0" max="100" value="80" />
+              </div>
             </div>
 
-            <button class="play-btn" id="playBtn" aria-label="Reproducir La Sazón FM">
-              <svg id="playIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-              <svg id="pauseIcon" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
-            </button>
-            <div class="play-caption mono" id="playCaption">Presiona para escuchar</div>
-
-            <div class="volume-row">
-              <span class="mono" style="font-size:11px; color:var(--muted);">VOL</span>
-              <input type="range" id="volumeSlider" min="0" max="100" value="80" />
+            <div class="sponsor-block">
+              <div class="sponsor-ribbon">Patrocinado por</div>
+              <img id="sponsorImg" class="sponsor-photo" src="" alt="Patrocinador" />
             </div>
           </div>
 
@@ -600,15 +577,6 @@
             <a href="https://oyentes.lasazonfm.com" target="_blank" rel="noopener" class="cta-suscribir display">🎶 Suscríbete y elige la próxima canción</a>
             <div class="cta-caption">Gratis. Gana tokens y decide qué suena en la radio.</div>
           </div>
-
-          <div class="sponsor-carousel" id="sponsorCarousel">
-            <img id="sponsorImg" class="sponsor-carousel-img" src="" alt="" />
-            <div class="sponsor-carousel-text" id="sponsorText">
-              <div class="sponsor-carousel-name display" id="sponsorName"></div>
-              <div class="sponsor-carousel-slogan" id="sponsorSlogan"></div>
-            </div>
-          </div>
-          <p class="sponsor-carousel-note">Ninguno de estos productos existe. Todo es puro humor, para que la radio suene como radio de verdad.</p>
         </div>
       </div>
     </div>
@@ -773,39 +741,22 @@
   updateNowPlaying();
   setInterval(updateNowPlaying, 15000);
 
-  // --- Carrusel de patrocinadores (fotos rotando cada 60s con fade) ---
-  const SPONSORS = [
-    { img: 'PEGO.png', name: 'PEGO', slogan: 'No lo llame cemento... llámelo PEGO.' },
-    { img: 'El_Puerto.png', name: 'Óptica El Puerto', slogan: 'Donde usted va visco... y sale tuerto.' },
-    { img: 'ElGocho.png', name: 'Salchichas El Gocho', slogan: 'Lo que su paladar necesita... y un poco más.' },
-    { img: 'Dosnal.png', name: 'Dosnal', slogan: 'Uno no es suficiente... con Dosnal sí.' }
-  ];
-
+  // --- Carrusel de patrocinadores: poster completo, rotando cada 60s con fade ---
+  const SPONSOR_IMAGES = ['PEGO.png', 'El_Puerto.png', 'ElGocho.png', 'Dosnal.png'];
   const sponsorImg = document.getElementById('sponsorImg');
-  const sponsorText = document.getElementById('sponsorText');
-  const sponsorName = document.getElementById('sponsorName');
-  const sponsorSlogan = document.getElementById('sponsorSlogan');
-
   let sponsorIndex = 0;
 
   function mostrarSponsor(i) {
     sponsorImg.classList.remove('visible');
-    sponsorText.classList.remove('visible');
-
     setTimeout(() => {
-      const s = SPONSORS[i];
-      sponsorImg.src = s.img;
-      sponsorImg.alt = s.name;
-      sponsorName.textContent = s.name;
-      sponsorSlogan.textContent = s.slogan;
+      sponsorImg.src = SPONSOR_IMAGES[i];
       sponsorImg.classList.add('visible');
-      sponsorText.classList.add('visible');
     }, 400);
   }
 
   mostrarSponsor(sponsorIndex);
   setInterval(() => {
-    sponsorIndex = (sponsorIndex + 1) % SPONSORS.length;
+    sponsorIndex = (sponsorIndex + 1) % SPONSOR_IMAGES.length;
     mostrarSponsor(sponsorIndex);
   }, 60000);
 </script>
