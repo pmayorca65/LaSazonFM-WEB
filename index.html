@@ -77,13 +77,14 @@
     border-bottom: 1px solid var(--border);
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 10px 18px;
+    justify-content: center;
+    gap: 16px;
+    padding: 16px 24px;
     flex-wrap: wrap;
   }
   .nowplaying-dot {
-    width: 8px;
-    height: 8px;
+    width: 11px;
+    height: 11px;
     border-radius: 50%;
     background: var(--auto);
     flex-shrink: 0;
@@ -95,7 +96,7 @@
   }
   .nowplaying-label {
     font-family: 'Oswald', sans-serif;
-    font-size: 10px;
+    font-size: 13px;
     text-transform: uppercase;
     letter-spacing: 0.15em;
     color: var(--muted);
@@ -103,26 +104,31 @@
   }
   .nowplaying-song {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
+    font-size: 19px;
+    font-weight: 500;
     color: var(--text);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 320px;
+    max-width: 480px;
   }
   .nowplaying-chip {
     display: none;
     font-family: 'Oswald', sans-serif;
-    font-size: 10.5px;
-    letter-spacing: 0.05em;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
     color: var(--bg);
     background: var(--amber);
     border-radius: 999px;
-    padding: 3px 10px;
+    padding: 6px 16px;
     white-space: nowrap;
   }
-  @media (max-width: 560px) {
-    .nowplaying-song { max-width: 55vw; }
+  @media (max-width: 700px) {
+    .nowplaying-bar { padding: 12px 16px; gap: 10px; }
+    .nowplaying-label { display: none; }
+    .nowplaying-song { font-size: 15px; max-width: 50vw; }
+    .nowplaying-chip { font-size: 12px; padding: 4px 12px; }
   }
   @media (prefers-reduced-motion: reduce) {
     .nowplaying-dot { animation: none; }
