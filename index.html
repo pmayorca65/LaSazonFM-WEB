@@ -30,6 +30,8 @@
     --auto: #2FB8A6;
     --auto-dim: #1B3A37;
     --amber: #E8A93F;
+    --coral: #D8663A;
+    --noche: #7F77DD;
   }
 
   * { box-sizing: border-box; }
@@ -369,86 +371,38 @@
   }
   .console-panel.live .volume-row input[type="range"] { accent-color: var(--onair); }
 
-  /* ---------- Section shared ---------- */
-  section { padding: 60px 0 56px; position: relative; }
-  .section-divider {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    max-width: 1160px;
-    margin: 0 auto;
-    padding: 0 24px;
-  }
-  .section-divider::before,
-  .section-divider::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: repeating-linear-gradient(90deg, var(--border) 0 6px, transparent 6px 11px);
-  }
-  .section-divider svg { flex-shrink: 0; opacity: 0.5; color: var(--amber); }
-  .section-title {
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.3em;
-    color: var(--muted);
-    margin-bottom: 22px;
-  }
-
-  /* ---------- Schedule ---------- */
-  .schedule-list { display: flex; flex-direction: column; border-top: 1px solid var(--border); }
-  .schedule-row {
-    display: grid;
-    grid-template-columns: 110px 1fr;
-    gap: 18px;
-    padding: 16px 0;
-    border-bottom: 1px solid var(--border);
-    align-items: baseline;
-  }
-  .schedule-time { color: var(--amber); font-size: 14px; }
-  .schedule-name { font-size: 16px; font-weight: 500; }
-  .schedule-desc { color: var(--muted); font-size: 13px; margin-top: 4px; }
-
-  /* ---------- Sponsors (easter egg) ---------- */
-  .sponsors-note {
-    color: var(--muted);
-    font-size: 13px;
-    margin-bottom: 24px;
-    line-height: 1.6;
-  }
-  .sponsor-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 16px;
-  }
-  .sponsor-card {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 20px;
-    position: relative;
-    overflow: hidden;
-  }
-  .sponsor-card::before {
-    content: 'PATROCINADOR';
-    position: absolute;
-    top: 11px;
-    right: -30px;
-    width: 120px;
+  /* ---------- Boton de Radio Interactiva (suscripcion + tokens) ---------- */
+  .console-cta {
+    display: block;
+    max-width: 420px;
+    margin: 26px auto 0;
     text-align: center;
-    transform: rotate(45deg);
+  }
+  .cta-suscribir {
+    display: inline-block;
+    padding: 13px 26px;
+    border-radius: 999px;
+    border: 1px solid var(--amber);
+    background: transparent;
+    color: var(--amber);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background .2s ease, color .2s ease;
+  }
+  .cta-suscribir:hover {
     background: var(--amber);
     color: var(--bg);
-    font-family: 'Oswald', sans-serif;
-    font-size: 8px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    padding: 2px 0;
   }
-  .sponsor-name { font-family: 'Oswald', sans-serif; font-size: 18px; margin-bottom: 6px; color: var(--amber); }
-  .sponsor-slogan { font-size: 13px; color: var(--muted); line-height: 1.5; }
+  .cta-caption {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 10px;
+    line-height: 1.4;
+  }
 
-  /* ---------- Carrusel de anuncios (rota una imagen por minuto) ---------- */
   /* ---------- Reproductor + carrusel de anuncios, lado a lado en pantallas grandes ---------- */
   .console-row {
     display: flex;
@@ -503,6 +457,72 @@
   .sponsor-carousel img.active { opacity: 1; }
   @media (prefers-reduced-motion: reduce) {
     .sponsor-carousel img { transition: none; }
+  }
+
+  /* ---------- Section shared ---------- */
+  section { padding: 60px 0 56px; position: relative; }
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  .section-divider::before,
+  .section-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: repeating-linear-gradient(90deg, var(--border) 0 6px, transparent 6px 11px);
+  }
+  .section-divider svg { flex-shrink: 0; opacity: 0.5; color: var(--amber); }
+  .section-title {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    margin-bottom: 22px;
+  }
+
+  /* ---------- Programacion: cuadricula de iconos por franja del dia ---------- */
+  .schedule-icons {
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+  }
+  .schedule-group-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+  .schedule-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 14px;
+  }
+  .schedule-tile {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    text-align: center;
+  }
+  .schedule-tile-bar { height: 4px; }
+  .schedule-tile img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+    padding: 10px;
+    display: block;
+  }
+  .schedule-tile-time {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 13px;
+    padding-bottom: 10px;
   }
 
   /* ---------- Footer ---------- */
@@ -600,6 +620,11 @@
               </div>
             </div>
           </div>
+
+          <div class="console-cta">
+            <a href="https://oyentes.lasazonfm.com" target="_blank" rel="noopener" class="cta-suscribir display">🎶 Suscríbete y elige la próxima canción</a>
+            <div class="cta-caption">Gratis. Gana tokens y decide qué suena en la radio.</div>
+          </div>
         </div>
       </div>
     </div>
@@ -611,116 +636,49 @@
    </div>
    <div class="wrap">
     <div class="section-title">Programación</div>
-    <div class="schedule-list">
-      <div class="schedule-row">
-        <div class="schedule-time mono">06 – 08</div>
-        <div>
-          <div class="schedule-name display">Café con Sazón</div>
-          <div class="schedule-desc">Instrumental y chill out para arrancar el día suave.</div>
+
+    <div class="schedule-icons">
+      <div>
+        <div class="schedule-group-label">Mañana</div>
+        <div class="schedule-grid">
+          <div class="schedule-tile"><div class="schedule-tile-bar" style="background:var(--amber)"></div><img src="01_cafe_con_sazon.png" alt="Café con Sazón" /><div class="schedule-tile-time mono" style="color:var(--amber)">06–08</div></div>
+          <div class="schedule-tile"><div class="schedule-tile-bar" style="background:var(--amber)"></div><img src="02_la_vieja_guardia.png" alt="La Vieja Guardia" /><div class="schedule-tile-time mono" style="color:var(--amber)">08–09</div></div>
+          <div class="schedule-tile"><div class="schedule-tile-bar" style="background:var(--amber)"></div><img src="03_lo_nuevo_en_espanol.png" alt="Lo Nuevo en Español" /><div class="schedule-tile-time mono" style="color:var(--amber)">09–10</div></div>
+          <div class="schedule-tile"><div class="schedule-tile-bar" style="background:var(--amber)"></div><img src="04_pop_en_espanol.png" alt="Pop en Español" /><div class="schedule-tile-time mono" style="color:var(--amber)">10–11</div></div>
+          <div class="schedule-tile"><div class="schedule-tile-bar" style="background:var(--amber)"></div><img src="05_alterno_latino.png" alt="Alterno Latino" /><div class="schedule-tile-time mono" style="color:var(--amber)">11–12</div></div>
         </div>
       </div>
-      <div class="schedule-row">
-        <div class="schedule-time mono">08 – 09</div>
-        <div>
-          <div class="schedule-name display">La Vieja Guardia</div>
-          <div class="schedule-desc">Clásicos y éxitos de los 60s, 70s y 80s.</div>
+
+      <div>
+        <div class="schedule-group-label">Tarde</div>
+        <div class="schedule-grid">
+          <div class="schedule-tile"><div class="schedule-tile-bar" style="background:var(--coral)"></div><img src="06_sabor_de_mediodia.png" alt="Sabor de Mediodía" /><div class="schedule-tile-time mono" style="color:var(--coral)">12–14</div></div>
+          <div class="schedule-tile"><div class="schedule-tile-bar" style="background:var(--coral)"></div><img src="07_tarde_de_baladas.png" alt="Tarde de Baladas" /><div class="schedule-tile-time mono" style="color:var(--coral)">14–16</div></div>
+          <div class="schedule-tile"><div class="schedule-tile-bar" style="background:var(--coral)"></div><img src="08_pop_rock_internacional.png" alt="Pop Rock Internacional" /><div class="schedule-tile-time mono" style="color:var(--coral)">16–17</div></div>
+          <div class="schedule-tile"><div class="schedule-tile-bar" style="background:var(--coral)"></div><img src="03_lo_nuevo_en_espanol.png" alt="Lo Nuevo en Español" /><div class="schedule-tile-time mono" style="color:var(--coral)">17–18</div></div>
         </div>
       </div>
-      <div class="schedule-row">
-        <div class="schedule-time mono">09 – 10</div>
-        <div>
-          <div class="schedule-name display">Lo Nuevo en Español</div>
-          <div class="schedule-desc">Los éxitos más recientes en español.</div>
+
+      <div>
+        <div class="schedule-group-label">Noche</div>
+        <div class="schedule-grid">
+          <div class="schedule-tile"><div class="schedule-tile-bar" style="background:var(--noche)"></div><img src="09_lo_nuevo_en_ingles.png" alt="Lo Nuevo en Inglés" /><div class="schedule-tile-time mono" style="color:var(--noche)">18–19</div></div>
+          <div class="schedule-tile"><div class="schedule-tile-bar" style="background:var(--noche)"></div><img src="10_hora_pico_con_sazon.png" alt="Hora Pico con Sazón" /><div class="schedule-tile-time mono" style="color:var(--noche)">19–20</div></div>
+          <div class="schedule-tile"><div class="schedule-tile-bar" style="background:var(--noche)"></div><img src="11_raices.png" alt="Raíces" /><div class="schedule-tile-time mono" style="color:var(--noche)">20–22</div></div>
+          <div class="schedule-tile"><div class="schedule-tile-bar" style="background:var(--noche)"></div><img src="12_baladas_internacionales.png" alt="Baladas Internacionales" /><div class="schedule-tile-time mono" style="color:var(--noche)">22–23</div></div>
         </div>
       </div>
-      <div class="schedule-row">
-        <div class="schedule-time mono">10 – 11</div>
-        <div>
-          <div class="schedule-name display">Pop en Español</div>
-          <div class="schedule-desc">Los grandes del pop en español.</div>
-        </div>
-      </div>
-      <div class="schedule-row">
-        <div class="schedule-time mono">11 – 12</div>
-        <div>
-          <div class="schedule-name display">Alterno Latino</div>
-          <div class="schedule-desc">Sonidos alternativos y fusión latina.</div>
-        </div>
-      </div>
-      <div class="schedule-row">
-        <div class="schedule-time mono">12 – 14</div>
-        <div>
-          <div class="schedule-name display">Sabor de Mediodía</div>
-          <div class="schedule-desc">Salsa, merengue y tropical para el almuerzo.</div>
-        </div>
-      </div>
-      <div class="schedule-row">
-        <div class="schedule-time mono">14 – 16</div>
-        <div>
-          <div class="schedule-name display">Tarde de Baladas</div>
-          <div class="schedule-desc">Baladas en español para la tarde tranquila.</div>
-        </div>
-      </div>
-      <div class="schedule-row">
-        <div class="schedule-time mono">16 – 17</div>
-        <div>
-          <div class="schedule-name display">Pop Rock Internacional</div>
-          <div class="schedule-desc">Lo mejor del pop rock en inglés.</div>
-        </div>
-      </div>
-      <div class="schedule-row">
-        <div class="schedule-time mono">17 – 18</div>
-        <div>
-          <div class="schedule-name display">Lo Nuevo en Español</div>
-          <div class="schedule-desc">Los éxitos más recientes en español.</div>
-        </div>
-      </div>
-      <div class="schedule-row">
-        <div class="schedule-time mono">18 – 19</div>
-        <div>
-          <div class="schedule-name display">Lo Nuevo en Inglés</div>
-          <div class="schedule-desc">Los éxitos más recientes en inglés.</div>
-        </div>
-      </div>
-      <div class="schedule-row">
-        <div class="schedule-time mono">19 – 20</div>
-        <div>
-          <div class="schedule-name display">Hora Pico con Sazón</div>
-          <div class="schedule-desc">Rock y pop en español, energía para cerrar el día.</div>
-        </div>
-      </div>
-      <div class="schedule-row">
-        <div class="schedule-time mono">20 – 22</div>
-        <div>
-          <div class="schedule-name display">Raíces</div>
-          <div class="schedule-desc">Música venezolana y folklórica, sabor de casa.</div>
-        </div>
-      </div>
-      <div class="schedule-row">
-        <div class="schedule-time mono">22 – 23</div>
-        <div>
-          <div class="schedule-name display">Baladas Internacionales</div>
-          <div class="schedule-desc">Grandes baladas internacionales para la noche.</div>
-        </div>
-      </div>
-      <div class="schedule-row">
-        <div class="schedule-time mono">23 – 01</div>
-        <div>
-          <div class="schedule-name display">Rock Clásico</div>
-          <div class="schedule-desc">Rock clásico en inglés para la madrugada.</div>
-        </div>
-      </div>
-      <div class="schedule-row" style="border-bottom:none;">
-        <div class="schedule-time mono">01 – 06</div>
-        <div>
-          <div class="schedule-name display">Trasnoche Variado</div>
-          <div class="schedule-desc">De todo un poco, para los que no tienen sueño.</div>
+
+      <div>
+        <div class="schedule-group-label">Madrugada</div>
+        <div class="schedule-grid">
+          <div class="schedule-tile"><div class="schedule-tile-bar" style="background:var(--auto)"></div><img src="13_rock_clasico.png" alt="Rock Clásico" /><div class="schedule-tile-time mono" style="color:var(--auto)">23–01</div></div>
+          <div class="schedule-tile"><div class="schedule-tile-bar" style="background:var(--auto)"></div><img src="14_trasnoche_variado.png" alt="Trasnoche Variado" /><div class="schedule-tile-time mono" style="color:var(--auto)">01–06</div></div>
         </div>
       </div>
     </div>
    </div>
   </section>
-
 
 </main>
 
@@ -731,7 +689,6 @@
 <audio id="audioPlayer" preload="none"></audio>
 
 <script>
-  // Cambia esto si tu dominio o mount cambian
   const STREAM_URL = "https://stream.lasazonfm.com/radio.mp3";
 
   const audio = document.getElementById('audioPlayer');
@@ -743,7 +700,6 @@
   const volumeSlider = document.getElementById('volumeSlider');
 
   audio.volume = 0.8;
-
   let isPlaying = false;
 
   function setPlayingUI(playing) {
@@ -756,7 +712,7 @@
 
   playBtn.addEventListener('click', () => {
     if (!isPlaying) {
-      audio.src = STREAM_URL + '?t=' + Date.now(); // cache-bust to avoid stale connections
+      audio.src = STREAM_URL + '?t=' + Date.now();
       audio.play().then(() => setPlayingUI(true)).catch(() => {
         playCaption.textContent = 'No se pudo conectar, intenta de nuevo';
       });
@@ -772,25 +728,19 @@
     audio.volume = Number(e.target.value) / 100;
   });
 
-  audio.addEventListener('waiting', () => {
-    playCaption.textContent = 'Conectando...';
-  });
-  audio.addEventListener('playing', () => {
-    playCaption.textContent = 'Al aire';
-  });
+  audio.addEventListener('waiting', () => { playCaption.textContent = 'Conectando...'; });
+  audio.addEventListener('playing', () => { playCaption.textContent = 'Al aire'; });
   audio.addEventListener('error', () => {
     setPlayingUI(false);
     playCaption.textContent = 'Transmisión no disponible';
   });
 
-  // Registro del service worker (necesario para poder "instalar" la pagina como app)
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('sw.js').catch(() => {});
     });
   }
 
-  // --- Now Playing: cancion actual + quien la escogio (Radio Interactiva) ---
   const nowplayingSong = document.getElementById('nowplayingSong');
   const nowplayingChip = document.getElementById('nowplayingChip');
   const NOWPLAYING_URL = 'https://oyentes.lasazonfm.com/api/oyentes/nowplaying';
@@ -800,9 +750,7 @@
       const res = await fetch(NOWPLAYING_URL + '?t=' + Date.now(), { cache: 'no-store' });
       if (!res.ok) throw new Error('no data');
       const data = await res.json();
-
       nowplayingSong.textContent = data.currentSong || 'La Sazón FM';
-
       if (data.escogidaPor) {
         nowplayingChip.textContent = `🎧 Escogida por ${data.escogidaPor}`;
         nowplayingChip.style.display = 'inline-block';
@@ -814,11 +762,9 @@
       nowplayingChip.style.display = 'none';
     }
   }
-
   updateNowPlaying();
   setInterval(updateNowPlaying, 15000);
 
-  // --- Carrusel de anuncios: cambia de imagen cada minuto ---
   (function () {
     const imgs = document.querySelectorAll('#sponsorCarousel .sponsor-img');
     if (imgs.length <= 1) return;
@@ -827,7 +773,7 @@
       imgs[indiceActual].classList.remove('active');
       indiceActual = (indiceActual + 1) % imgs.length;
       imgs[indiceActual].classList.add('active');
-    }, 60000); // 60000 ms = 1 minuto
+    }, 60000);
   })();
 </script>
 
