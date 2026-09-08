@@ -498,10 +498,15 @@
     color: var(--muted);
     margin-bottom: 12px;
   }
+  .schedule-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
   .schedule-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 14px;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 16px;
   }
   .schedule-tile {
     background: var(--panel);
@@ -515,14 +520,17 @@
     width: 100%;
     aspect-ratio: 1 / 1;
     object-fit: contain;
-    padding: 10px;
+    padding: 6px;
     display: block;
   }
   .schedule-tile-time {
     font-family: 'JetBrains Mono', monospace;
     font-weight: 700;
-    font-size: 13px;
-    padding-bottom: 10px;
+    font-size: 14px;
+    padding-bottom: 12px;
+  }
+  @media (max-width: 480px) {
+    .schedule-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
   }
 
   /* ---------- Footer ---------- */
@@ -634,7 +642,7 @@
    <div class="section-divider">
      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 14a3 3 0 003-3V5a3 3 0 00-6 0v6a3 3 0 003 3zm5-3a5 5 0 01-10 0H5a7 7 0 006 6.92V21h2v-3.08A7 7 0 0019 11h-2z"/></svg>
    </div>
-   <div class="wrap">
+   <div class="schedule-wrap">
     <div class="section-title">Programación</div>
 
     <div class="schedule-icons">
