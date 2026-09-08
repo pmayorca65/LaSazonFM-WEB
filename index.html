@@ -645,45 +645,8 @@
    <div class="schedule-wrap">
     <div class="section-title">Programación</div>
 
-    <div class="schedule-icons">
-      <div>
-        <div class="schedule-group-label">Mañana</div>
-        <div class="schedule-grid">
-          <div class="schedule-tile"><div class="schedule-tile-bar" style="background:var(--amber)"></div><img src="01_cafe_con_sazon.png" alt="Café con Sazón" /><div class="schedule-tile-time mono" style="color:var(--amber)">06–08</div></div>
-          <div class="schedule-tile"><div class="schedule-tile-bar" style="background:var(--amber)"></div><img src="02_la_vieja_guardia.png" alt="La Vieja Guardia" /><div class="schedule-tile-time mono" style="color:var(--amber)">08–09</div></div>
-          <div class="schedule-tile"><div class="schedule-tile-bar" style="background:var(--amber)"></div><img src="03_lo_nuevo_en_espanol.png" alt="Lo Nuevo en Español" /><div class="schedule-tile-time mono" style="color:var(--amber)">09–10</div></div>
-          <div class="schedule-tile"><div class="schedule-tile-bar" style="background:var(--amber)"></div><img src="04_pop_en_espanol.png" alt="Pop en Español" /><div class="schedule-tile-time mono" style="color:var(--amber)">10–11</div></div>
-          <div class="schedule-tile"><div class="schedule-tile-bar" style="background:var(--amber)"></div><img src="05_alterno_latino.png" alt="Alterno Latino" /><div class="schedule-tile-time mono" style="color:var(--amber)">11–12</div></div>
-        </div>
-      </div>
-
-      <div>
-        <div class="schedule-group-label">Tarde</div>
-        <div class="schedule-grid">
-          <div class="schedule-tile"><div class="schedule-tile-bar" style="background:var(--coral)"></div><img src="06_sabor_de_mediodia.png" alt="Sabor de Mediodía" /><div class="schedule-tile-time mono" style="color:var(--coral)">12–14</div></div>
-          <div class="schedule-tile"><div class="schedule-tile-bar" style="background:var(--coral)"></div><img src="07_tarde_de_baladas.png" alt="Tarde de Baladas" /><div class="schedule-tile-time mono" style="color:var(--coral)">14–16</div></div>
-          <div class="schedule-tile"><div class="schedule-tile-bar" style="background:var(--coral)"></div><img src="08_pop_rock_internacional.png" alt="Pop Rock Internacional" /><div class="schedule-tile-time mono" style="color:var(--coral)">16–17</div></div>
-          <div class="schedule-tile"><div class="schedule-tile-bar" style="background:var(--coral)"></div><img src="03_lo_nuevo_en_espanol.png" alt="Lo Nuevo en Español" /><div class="schedule-tile-time mono" style="color:var(--coral)">17–18</div></div>
-        </div>
-      </div>
-
-      <div>
-        <div class="schedule-group-label">Noche</div>
-        <div class="schedule-grid">
-          <div class="schedule-tile"><div class="schedule-tile-bar" style="background:var(--noche)"></div><img src="09_lo_nuevo_en_ingles.png" alt="Lo Nuevo en Inglés" /><div class="schedule-tile-time mono" style="color:var(--noche)">18–19</div></div>
-          <div class="schedule-tile"><div class="schedule-tile-bar" style="background:var(--noche)"></div><img src="10_hora_pico_con_sazon.png" alt="Hora Pico con Sazón" /><div class="schedule-tile-time mono" style="color:var(--noche)">19–20</div></div>
-          <div class="schedule-tile"><div class="schedule-tile-bar" style="background:var(--noche)"></div><img src="11_raices.png" alt="Raíces" /><div class="schedule-tile-time mono" style="color:var(--noche)">20–22</div></div>
-          <div class="schedule-tile"><div class="schedule-tile-bar" style="background:var(--noche)"></div><img src="12_baladas_internacionales.png" alt="Baladas Internacionales" /><div class="schedule-tile-time mono" style="color:var(--noche)">22–23</div></div>
-        </div>
-      </div>
-
-      <div>
-        <div class="schedule-group-label">Madrugada</div>
-        <div class="schedule-grid">
-          <div class="schedule-tile"><div class="schedule-tile-bar" style="background:var(--auto)"></div><img src="13_rock_clasico.png" alt="Rock Clásico" /><div class="schedule-tile-time mono" style="color:var(--auto)">23–01</div></div>
-          <div class="schedule-tile"><div class="schedule-tile-bar" style="background:var(--auto)"></div><img src="14_trasnoche_variado.png" alt="Trasnoche Variado" /><div class="schedule-tile-time mono" style="color:var(--auto)">01–06</div></div>
-        </div>
-      </div>
+    <div class="schedule-icons" id="scheduleIcons">
+      <div class="schedule-group-label">Cargando horario...</div>
     </div>
    </div>
   </section>
@@ -783,6 +746,147 @@
       imgs[indiceActual].classList.add('active');
     }, 60000);
   })();
+
+  // --- Horario de Programacion: se lee del Panel de Radio y se dibuja solo. ---
+  // Si el Panel edita el horario, esta pagina lo refleja sin que haya que tocar
+  // este archivo. Las horas seguidas con la misma categoria se combinan en un
+  // solo icono (ej: 06-08 en vez de 06-07 y 07-08 por separado).
+  const HORARIO_URL = 'https://panel.lasazonfm.com/api/schedule/publico';
+
+  const ICONOS_POR_CATEGORIA = {
+    InstrumentalChillOut: '01_cafe_con_sazon.png',
+    ClasicosOldies: '02_la_vieja_guardia.png',
+    ActualEspanol: '03_lo_nuevo_en_espanol.png',
+    PopEspanol: '04_pop_en_espanol.png',
+    LatinAlternativo: '05_alterno_latino.png',
+    SalsaMerengueTropical: '06_sabor_de_mediodia.png',
+    BaladasEspanol: '07_tarde_de_baladas.png',
+    PopRockInternacional: '08_pop_rock_internacional.png',
+    ActualIngles: '09_lo_nuevo_en_ingles.png',
+    RockPopEspanol: '10_hora_pico_con_sazon.png',
+    VenezolanaFolklorica: '11_raices.png',
+    BaladasInternacionales: '12_baladas_internacionales.png',
+    RockClasicoIngles: '13_rock_clasico.png',
+    OtrosInternacional: '14_trasnoche_variado.png',
+    Navidena: '02_la_vieja_guardia.png'
+  };
+
+  // Franjas del dia. "Madrugada" empieza a las 23h y cruza la medianoche.
+  const PERIODOS_HORARIO = [
+    { nombre: 'Mañana', color: 'var(--amber)', horas: [6, 7, 8, 9, 10, 11] },
+    { nombre: 'Tarde', color: 'var(--coral)', horas: [12, 13, 14, 15, 16, 17] },
+    { nombre: 'Noche', color: 'var(--noche)', horas: [18, 19, 20, 21, 22] },
+    { nombre: 'Madrugada', color: 'var(--auto)', horas: [23, 0, 1, 2, 3, 4, 5] }
+  ];
+
+  // Se usa solo si no se pudo conectar con el Panel (para que la seccion
+  // nunca se quede vacia).
+  const HORARIO_RESPALDO = [
+    { hour: 0, categoria: 'ClasicosOldies', label: 'Clasicos / Oldies' },
+    { hour: 1, categoria: 'OtrosInternacional', label: 'Otros Internacional' },
+    { hour: 2, categoria: 'OtrosInternacional', label: 'Otros Internacional' },
+    { hour: 3, categoria: 'OtrosInternacional', label: 'Otros Internacional' },
+    { hour: 4, categoria: 'OtrosInternacional', label: 'Otros Internacional' },
+    { hour: 5, categoria: 'OtrosInternacional', label: 'Otros Internacional' },
+    { hour: 6, categoria: 'InstrumentalChillOut', label: 'Instrumental / Chill Out' },
+    { hour: 7, categoria: 'InstrumentalChillOut', label: 'Instrumental / Chill Out' },
+    { hour: 8, categoria: 'ClasicosOldies', label: 'Clasicos / Oldies' },
+    { hour: 9, categoria: 'ActualEspanol', label: 'Actual Espanol' },
+    { hour: 10, categoria: 'PopEspanol', label: 'Pop Espanol' },
+    { hour: 11, categoria: 'LatinAlternativo', label: 'Latin Alternativo' },
+    { hour: 12, categoria: 'SalsaMerengueTropical', label: 'Salsa / Merengue / Tropical' },
+    { hour: 13, categoria: 'SalsaMerengueTropical', label: 'Salsa / Merengue / Tropical' },
+    { hour: 14, categoria: 'BaladasEspanol', label: 'Baladas Espanol' },
+    { hour: 15, categoria: 'BaladasEspanol', label: 'Baladas Espanol' },
+    { hour: 16, categoria: 'PopRockInternacional', label: 'Pop Rock Internacional' },
+    { hour: 17, categoria: 'ActualEspanol', label: 'Actual Espanol' },
+    { hour: 18, categoria: 'ActualIngles', label: 'Actual Ingles' },
+    { hour: 19, categoria: 'RockPopEspanol', label: 'Rock Pop Espanol' },
+    { hour: 20, categoria: 'VenezolanaFolklorica', label: 'Venezolana Folklorica' },
+    { hour: 21, categoria: 'VenezolanaFolklorica', label: 'Venezolana Folklorica' },
+    { hour: 22, categoria: 'BaladasInternacionales', label: 'Baladas Internacionales' },
+    { hour: 23, categoria: 'RockClasicoIngles', label: 'Rock Clasico Ingles' }
+  ];
+
+  function pad2Hora(h) {
+    return String(((h % 24) + 24) % 24).padStart(2, '0');
+  }
+
+  function agruparBloquesHorario(porHora, horasEnOrden) {
+    const bloques = [];
+    for (const h of horasEnOrden) {
+      const info = porHora[h];
+      if (!info) continue;
+      const anterior = bloques[bloques.length - 1];
+      if (anterior && anterior.categoria === info.categoria && anterior.horaFin === h) {
+        anterior.horaFin = h + 1;
+      } else {
+        bloques.push({ categoria: info.categoria, label: info.label, horaInicio: h, horaFin: h + 1 });
+      }
+    }
+    return bloques;
+  }
+
+  function dibujarHorario(horario) {
+    const porHora = {};
+    horario.forEach((b) => { porHora[b.hour] = b; });
+
+    const cont = document.getElementById('scheduleIcons');
+    cont.innerHTML = '';
+
+    PERIODOS_HORARIO.forEach((periodo) => {
+      const bloques = agruparBloquesHorario(porHora, periodo.horas);
+      if (bloques.length === 0) return;
+
+      const grupo = document.createElement('div');
+
+      const etiqueta = document.createElement('div');
+      etiqueta.className = 'schedule-group-label';
+      etiqueta.textContent = periodo.nombre;
+      grupo.appendChild(etiqueta);
+
+      const grid = document.createElement('div');
+      grid.className = 'schedule-grid';
+
+      bloques.forEach((b) => {
+        const tile = document.createElement('div');
+        tile.className = 'schedule-tile';
+
+        const bar = document.createElement('div');
+        bar.className = 'schedule-tile-bar';
+        bar.style.background = periodo.color;
+        tile.appendChild(bar);
+
+        const img = document.createElement('img');
+        img.src = ICONOS_POR_CATEGORIA[b.categoria] || '14_trasnoche_variado.png';
+        img.alt = b.label;
+        tile.appendChild(img);
+
+        const time = document.createElement('div');
+        time.className = 'schedule-tile-time mono';
+        time.style.color = periodo.color;
+        time.textContent = pad2Hora(b.horaInicio) + '–' + pad2Hora(b.horaFin);
+        tile.appendChild(time);
+
+        grid.appendChild(tile);
+      });
+
+      grupo.appendChild(grid);
+      cont.appendChild(grupo);
+    });
+  }
+
+  async function cargarHorario() {
+    try {
+      const res = await fetch(HORARIO_URL + '?t=' + Date.now(), { cache: 'no-store' });
+      if (!res.ok) throw new Error('no data');
+      const data = await res.json();
+      dibujarHorario(data);
+    } catch {
+      dibujarHorario(HORARIO_RESPALDO);
+    }
+  }
+  cargarHorario();
 </script>
 
 </body>
